@@ -1,4 +1,5 @@
 import java.util.ArrayList;
+import java.util.List;
 
 public class Biblioteca {
     private ArrayList<Libro> libros;
@@ -9,28 +10,28 @@ public class Biblioteca {
 
     public void addBook(Libro libro) {
         libros.add(libro);
-        System.out.println("Libro añadido: " + libro.getTitulo());
     }
 
-    public void showBooks() {
-        if (libros.isEmpty()) {
-            System.out.println("La biblioteca está vacía.");
-        } else {
-            for (Libro libro : libros) {
-                libro.showInformation();
-                System.out.println("Es antiguo: " + (libro.isOld() ? "Sí" : "No"));
-                System.out.println("------------------------");
+    public List<Libro> getLibros() {
+        return libros;
+    }
+
+    public List<Libro> getLibrosPrestados(boolean prestados) {
+        List<Libro> resultado = new ArrayList<>();
+        for (Libro libro : libros) {
+            if (libro.isPrestado() == prestados) {
+                resultado.add(libro);
             }
         }
+        return resultado;
     }
-
-    public void searchBookByTitle(String titulo) {
+    
+    public Libro searchBookByTitle(String titulo) {
         for (Libro libro : libros) {
             if (libro.getTitulo().equalsIgnoreCase(titulo)) {
-                libro.showInformation();
-                return;
+                return libro;
             }
         }
-        System.out.println("No se encontró el libro con el título: " + titulo);
+        return null;
     }
 }
